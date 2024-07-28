@@ -15,34 +15,49 @@ const CONNECTION_STRING =
 
 mongoose
   .connect(CONNECTION_STRING)
-  .then(() => console.log('Connected to MongoDB', CONNECTION_STRING))
+  .then(() => console.log('Connected to MongoDB'))
   .catch((err) => console.error('Failed to connect to MongoDB', err));
 
 const app = express();
 
-const corsOptions = {
-  origin: process.env.NETLIFY_URL || 'http://localhost:3000',
-  credentials: true,
-  optionsSuccessStatus: 200,
-};
-
-app.use(cors(corsOptions));
+app.use(
+  cors({
+    credentials: true,
+    origin: process.env.NETLIFY_URL || 'http://localhost:3000',
+  })
+);
 
 app.use(express.json());
+
+// const sessionOptions = {
+//   secret: process.env.SESSION_SECRET || 'kanbas',
+//   resave: false,
+//   saveUninitialized: false,
+// };
+
+// if (process.env.NODE_ENV !== 'development') {
+//   sessionOptions.proxy = true;
+//   sessionOptions.cookie = {
+//     sameSite: 'none',
+//     secure: true,
+//     domain: process.env.NODE_SERVER_DOMAIN,
+//   };
+// }
 
 const sessionOptions = {
   secret: process.env.SESSION_SECRET || 'kanbas',
   resave: false,
   saveUninitialized: false,
+  cookie: {
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+    httpOnly: true,
+  },
 };
 
 if (process.env.NODE_ENV !== 'development') {
   sessionOptions.proxy = true;
-  sessionOptions.cookie = {
-    sameSite: 'none',
-    secure: true,
-    domain: process.env.NODE_SERVER_DOMAIN,
-  };
+  sessionOptions.cookie.domain = process.env.NODE_SERVER_DOMAIN;
 }
 
 app.use(session(sessionOptions));
