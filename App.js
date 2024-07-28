@@ -15,7 +15,7 @@ const CONNECTION_STRING =
 
 mongoose
   .connect(CONNECTION_STRING)
-  .then(() => console.log('Connected to MongoDB'))
+  .then(() => console.log('Connected to MongoDB', CONNECTION_STRING))
   .catch((err) => console.error('Failed to connect to MongoDB', err));
 
 const app = express();
