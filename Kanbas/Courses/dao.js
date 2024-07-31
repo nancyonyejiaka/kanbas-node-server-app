@@ -21,6 +21,6 @@ export const findCourseByNumber = (number) => model.findOne({ number });
 export const findCourseByName = (name) => model.findOne({ name: name });
 
 export const updateCourse = (courseId, course) =>
-  model.updateOne({ _id: courseId }, { $set: course });
+  model.updateOne({ number: courseId }, { $set: course });
 
 export const deleteCourse = (courseId) => model.deleteOne({ _id: courseId });

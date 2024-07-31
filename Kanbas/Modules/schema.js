@@ -3,8 +3,9 @@ const moduleSchema = new mongoose.Schema(
   {
     name: { type: String, required: true, unique: true },
     description: String,
-    course: { type: mongoose.Schema.Types.ObjectId, ref: 'courses' },
-    lessons: [{ type: mongoose.Schema.Types.ObjectId, ref: 'lessons' }],
+    course: { type: String, required: true },
+    lessons: [{ type: Object }],
+    editing: { type: Boolean, default: false },
   },
   { collection: 'modules' }
 );

@@ -62,11 +62,11 @@ if (process.env.NODE_ENV !== 'development') {
 
 app.use(session(sessionOptions));
 
-UserRoutes(app);
-
 app.get('/', (req, res) => {
   res.send('Welcome to Full Stack Development!');
 });
+
+UserRoutes(app);
 AssignmentRoutes(app);
 ModuleRoutes(app);
 CourseRoutes(app);

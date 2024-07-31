@@ -16,8 +16,8 @@ export const findModulesByPartialName = (partialName) => {
   });
 };
 
-export const findModuleByCourseId = (courseId) =>
-  model.findOne({ course: courseId });
+export const findModuleByCourseNumber = (courseNum) =>
+  model.find({ course: courseNum });
 
 export const findModuleByName = (name) => model.findOne({ name: name });
 
